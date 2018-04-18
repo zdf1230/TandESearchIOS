@@ -12,6 +12,7 @@
 		28BC188520870997007CB946 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28BC188320870997007CB946 /* Main.storyboard */; };
 		28BC188720870998007CB946 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28BC188620870998007CB946 /* Assets.xcassets */; };
 		28BC188A20870998007CB946 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28BC188820870998007CB946 /* LaunchScreen.storyboard */; };
+		7F2B0AF25E355CF1686D0C84 /* Pods_TandESearchIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5D695BD63FC5B973B4C45E0 /* Pods_TandESearchIOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,9 @@
 		28BC188620870998007CB946 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		28BC188920870998007CB946 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28BC188B20870998007CB946 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63F45980AB36D47406AC6F4E /* Pods-TandESearchIOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TandESearchIOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-TandESearchIOS/Pods-TandESearchIOS.release.xcconfig"; sourceTree = "<group>"; };
+		C5D695BD63FC5B973B4C45E0 /* Pods_TandESearchIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TandESearchIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDAC9758105549E6147C6F7E /* Pods-TandESearchIOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TandESearchIOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TandESearchIOS/Pods-TandESearchIOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F2B0AF25E355CF1686D0C84 /* Pods_TandESearchIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03A3F76764229B2A7A112449 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DDAC9758105549E6147C6F7E /* Pods-TandESearchIOS.debug.xcconfig */,
+				63F45980AB36D47406AC6F4E /* Pods-TandESearchIOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		28BC187320870997007CB946 = {
 			isa = PBXGroup;
 			children = (
 				28BC187E20870997007CB946 /* TandESearchIOS */,
 				28BC187D20870997007CB946 /* Products */,
+				03A3F76764229B2A7A112449 /* Pods */,
+				60514DB1550BA6802B905026 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,6 +80,14 @@
 			path = TandESearchIOS;
 			sourceTree = "<group>";
 		};
+		60514DB1550BA6802B905026 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C5D695BD63FC5B973B4C45E0 /* Pods_TandESearchIOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +95,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 28BC188E20870998007CB946 /* Build configuration list for PBXNativeTarget "TandESearchIOS" */;
 			buildPhases = (
+				D67E9D01BB2E67C8B350733B /* [CP] Check Pods Manifest.lock */,
 				28BC187820870997007CB946 /* Sources */,
 				28BC187920870997007CB946 /* Frameworks */,
 				28BC187A20870997007CB946 /* Resources */,
+				60D1BA0DD43A544D33F41F66 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,6 +155,57 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		60D1BA0DD43A544D33F41F66 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TandESearchIOS/Pods-TandESearchIOS-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireSwiftyJSON/AlamofireSwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
+				"${BUILT_PRODUCTS_DIR}/EasyToast/EasyToast.framework",
+				"${BUILT_PRODUCTS_DIR}/McPicker/McPicker.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftSpinner/SwiftSpinner.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireSwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyToast.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/McPicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSpinner.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TandESearchIOS/Pods-TandESearchIOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D67E9D01BB2E67C8B350733B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TandESearchIOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		28BC187820870997007CB946 /* Sources */ = {
@@ -278,14 +355,12 @@
 		};
 		28BC188F20870998007CB946 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDAC9758105549E6147C6F7E /* Pods-TandESearchIOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TandESearchIOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zdf.TandESearchIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -295,14 +370,12 @@
 		};
 		28BC189020870998007CB946 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 63F45980AB36D47406AC6F4E /* Pods-TandESearchIOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TandESearchIOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zdf.TandESearchIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
