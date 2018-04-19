@@ -11,6 +11,9 @@ target 'TandESearchIOS' do
   pod 'SwiftSpinner'
   pod 'McPicker'
   pod 'Cosmos'
+  pod 'GooglePlaces'
+  pod 'GooglePlacePicker'
+  pod 'GoogleMaps'
 
   # Pods for TandESearchIOS
 
