@@ -8,20 +8,35 @@
 
 import UIKit
 import McPicker
+import EasyToast
+import Alamofire
+import AlamofireSwiftyJSON
+import SwiftyJSON
 import GooglePlaces
+import CoreLocation
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var keywordTextField: UITextField!
+    @IBOutlet weak var categoryTextField: UITextField!
+    @IBOutlet weak var distanceTextField: UITextField!
+    @IBOutlet weak var fromTextField: UITextField!
+    let locationManager = CLLocationManager()
     let categoryData: [[String]] = [
         ["Default", "Airport", "Amusement Park", "Aquarium", "Art Gallery", "Bowling Alley", "Bakery", "Bar", "Beauty salon", "Bus Station", "Cafe", "Campground", "Car Rental", "Casino", "Lodging", "Movie theater", "Museum", "Night Club", "Park", "Parking", "Restaurant", "Shopping Mall", "Stadium", "Subway Station", "Taxi Stand", "Train Station", "Transit Station", "Travel Agency", "Zoo"]
     ]
-    @IBOutlet weak var categoryTextField: UITextField!
-    @IBOutlet weak var fromTextField: UITextField!
+    let serverUrlPrefix = "http://localhost:3000/"
+    var currentLocation: CLLocation!
+    var resultsObject: JSON!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        keywordTextField.delegate = self
         
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,6 +61,87 @@ class ViewController: UIViewController {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    @IBAction func touchSearch(_ sender: Any) {
+        if formValidation() {
+            if fromTextField.text != "Your Location" {
+                requestPlacesWithoutLocation()
+            }
+            else {
+                requetPlaces(lat: currentLocation.coordinate.latitude, lng: currentLocation.coordinate.longitude)
+            }
+        }
+    }
+    
+    @IBAction func touchClear(_ sender: Any) {
+        keywordTextField.text = ""
+        categoryTextField.text = "Default"
+        distanceTextField.text = ""
+        fromTextField.text = "Your Location"
+    }
+    
+    private func requestPlacesWithoutLocation() {
+        let url = URL(string: serverUrlPrefix + "location")
+        let parameters: Parameters = ["location": fromTextField.text!]
+        
+        Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
+            self.requetPlaces(lat: response.result.value!["lat"].double!, lng: response.result.value!["lng"].double!)
+        }
+    }
+    
+    private func requetPlaces(lat: Double, lng:Double) {
+        print(lat, lng)
+        let url = URL(string: serverUrlPrefix + "place")
+        let category = categoryTextField.text?.lowercased().replacingOccurrences(of: " ", with: "_")
+        let distance = distanceTextField.text != "" ? Int(distanceTextField.text!)! : 10
+        let parameters: Parameters = ["keyword": keywordTextField.text!,
+                                       "category": category!,
+                                       "distance": distance,
+                                       "lat": lat,
+                                       "lng": lng]
+        
+        Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
+            self.resultsObject = response.result.value
+            self.performSegue(withIdentifier: "results", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let resultsTableView: ResultsTableViewController = segue.destination as! ResultsTableViewController
+        if resultsObject != nil {
+            resultsTableView.setTable(resultsObject: resultsObject)
+        }
+    }
+    
+    private func formValidation() -> Bool {
+        if (keywordTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+            self.view.showToast("Keyword cannot be empty", position: .bottom, popTime: 2, dismissOnTap: true)
+            return false
+        }
+        if !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: distanceTextField.text!)) {
+            self.view.showToast("Distance must be numbers", position: .bottom, popTime: 2, dismissOnTap: true)
+            return false
+        }
+        return true
+    }
+    
+}
+
+extension ViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        keywordTextField.resignFirstResponder()
+        return false
+    }
+    
+}
+
+extension ViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        currentLocation = locations.last!
+        print("Location \(currentLocation)")
     }
     
 }
