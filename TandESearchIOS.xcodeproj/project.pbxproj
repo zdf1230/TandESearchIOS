@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28333A21208BC61E00A56E51 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A20208BC61D00A56E51 /* DetailsViewController.swift */; };
+		28333A32208BE0E800A56E51 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A31208BE0E800A56E51 /* InfoViewController.swift */; };
 		28AFB8942089AA85006E3A98 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AFB8932089AA85006E3A98 /* CoreLocation.framework */; };
 		28AFB8982089BADA006E3A98 /* ResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AFB8972089BADA006E3A98 /* ResultsTableViewController.swift */; };
 		28BC188020870997007CB946 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BC187F20870997007CB946 /* AppDelegate.swift */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28333A20208BC61D00A56E51 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		28333A31208BE0E800A56E51 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		28AFB8932089AA85006E3A98 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		28AFB8972089BADA006E3A98 /* ResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableViewController.swift; sourceTree = "<group>"; };
 		28BC187C20870997007CB946 /* TandESearchIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TandESearchIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,7 +82,9 @@
 				28BC187F20870997007CB946 /* AppDelegate.swift */,
 				28BC188120870997007CB946 /* ViewController.swift */,
 				28AFB8972089BADA006E3A98 /* ResultsTableViewController.swift */,
+				28333A20208BC61D00A56E51 /* DetailsViewController.swift */,
 				28BC188320870997007CB946 /* Main.storyboard */,
+				28333A31208BE0E800A56E51 /* InfoViewController.swift */,
 				28BC188620870998007CB946 /* Assets.xcassets */,
 				28BC188820870998007CB946 /* LaunchScreen.storyboard */,
 				28BC188B20870998007CB946 /* Info.plist */,
@@ -245,6 +251,8 @@
 				28AFB8982089BADA006E3A98 /* ResultsTableViewController.swift in Sources */,
 				28BC188220870997007CB946 /* ViewController.swift in Sources */,
 				28BC188020870997007CB946 /* AppDelegate.swift in Sources */,
+				28333A21208BC61E00A56E51 /* DetailsViewController.swift in Sources */,
+				28333A32208BE0E800A56E51 /* InfoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

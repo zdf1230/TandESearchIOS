@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 import AlamofireSwiftyJSON
+import SwiftSpinner
 
 class ResultsTableViewController: UITableViewController {
 
@@ -21,6 +22,7 @@ class ResultsTableViewController: UITableViewController {
     var placeResultDisplay = [JSON]()
     var page = 0
     var nextPageToken = String()
+    var detailsObject: JSON!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,14 @@ class ResultsTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         previousButton.isEnabled = false
         checkNextButtonStatus()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isToolbarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isToolbarHidden = true
     }
     
     func setTable(resultsObject: JSON) {
@@ -103,6 +113,20 @@ class ResultsTableViewController: UITableViewController {
         return 80.0
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        SwiftSpinner.show("Fetching place details...")
+        let placeid = placeResultDisplay[indexPath.row]["place_id"].stringValue
+        print(placeid)
+        let url = URL(string: serverUrlPrefix + "placedetails")
+        let parameters: Parameters = ["placeid": placeid]
+        
+        Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
+            self.detailsObject = response.result.value
+            self.performSegue(withIdentifier: "details", sender: nil)
+            SwiftSpinner.hide()
+        }
+    }
+    
     @IBAction func touchPrevious(_ sender: Any) {
         nextButton.isEnabled = true
         page -= 1
@@ -124,6 +148,7 @@ class ResultsTableViewController: UITableViewController {
             self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .left)
         }
         else {
+            SwiftSpinner.show("Loading next page...")
             let url = URL(string: serverUrlPrefix + "moreplaces")
             let parameters: Parameters = ["next_page_token": nextPageToken]
             
@@ -139,54 +164,18 @@ class ResultsTableViewController: UITableViewController {
                 }
                 self.checkNextButtonStatus()
                 self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .left)
+                SwiftSpinner.hide()
             }
         }
         
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        let detailsView: DetailsViewController = segue.destination as! DetailsViewController
+        if detailsObject != nil {
+            detailsView.setDetails(detailsObject: detailsObject)
+        }
     }
-    */
+    
 
 }

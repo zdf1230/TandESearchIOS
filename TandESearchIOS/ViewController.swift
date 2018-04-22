@@ -14,6 +14,7 @@ import AlamofireSwiftyJSON
 import SwiftyJSON
 import GooglePlaces
 import CoreLocation
+import SwiftSpinner
 
 class ViewController: UIViewController {
 
@@ -31,6 +32,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isToolbarHidden = true
+        
         keywordTextField.delegate = self
         
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -91,6 +94,7 @@ class ViewController: UIViewController {
     }
     
     private func requetPlaces(lat: Double, lng:Double) {
+        SwiftSpinner.show("Searching...")
         print(lat, lng)
         let url = URL(string: serverUrlPrefix + "place")
         let category = categoryTextField.text?.lowercased().replacingOccurrences(of: " ", with: "_")
@@ -104,6 +108,7 @@ class ViewController: UIViewController {
         Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
             self.resultsObject = response.result.value
             self.performSegue(withIdentifier: "results", sender: nil)
+            SwiftSpinner.hide()
         }
     }
     
