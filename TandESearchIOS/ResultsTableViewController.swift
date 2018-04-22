@@ -98,7 +98,6 @@ class ResultsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "place", for: indexPath)
-
         cell.textLabel?.text = placeResultDisplay[indexPath.row]["name"].string
         cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.text = placeResultDisplay[indexPath.row]["vicinity"].string
@@ -122,8 +121,8 @@ class ResultsTableViewController: UITableViewController {
         
         Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
             self.detailsObject = response.result.value
-            self.performSegue(withIdentifier: "details", sender: nil)
             SwiftSpinner.hide()
+            self.performSegue(withIdentifier: "details", sender: nil)
         }
     }
     
@@ -163,8 +162,8 @@ class ResultsTableViewController: UITableViewController {
                     self.nextPageToken = ""
                 }
                 self.checkNextButtonStatus()
-                self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .left)
                 SwiftSpinner.hide()
+                self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .left)
             }
         }
         

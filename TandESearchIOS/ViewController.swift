@@ -95,7 +95,6 @@ class ViewController: UIViewController {
     
     private func requetPlaces(lat: Double, lng:Double) {
         SwiftSpinner.show("Searching...")
-        print(lat, lng)
         let url = URL(string: serverUrlPrefix + "place")
         let category = categoryTextField.text?.lowercased().replacingOccurrences(of: " ", with: "_")
         let distance = distanceTextField.text != "" ? Int(distanceTextField.text!)! : 10
@@ -107,8 +106,8 @@ class ViewController: UIViewController {
         
         Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
             self.resultsObject = response.result.value
-            self.performSegue(withIdentifier: "results", sender: nil)
             SwiftSpinner.hide()
+            self.performSegue(withIdentifier: "results", sender: nil)
         }
     }
     
