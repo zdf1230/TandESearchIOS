@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     let categoryData: [[String]] = [
         ["Default", "Airport", "Amusement Park", "Aquarium", "Art Gallery", "Bowling Alley", "Bakery", "Bar", "Beauty salon", "Bus Station", "Cafe", "Campground", "Car Rental", "Casino", "Lodging", "Movie theater", "Museum", "Night Club", "Park", "Parking", "Restaurant", "Shopping Mall", "Stadium", "Subway Station", "Taxi Stand", "Train Station", "Transit Station", "Travel Agency", "Zoo"]
     ]
-    let serverUrlPrefix = "http://localhost:3000/"
     var currentLocation: CLLocation!
     var resultsObject: JSON!
     
@@ -85,7 +84,7 @@ class ViewController: UIViewController {
     }
     
     private func requestPlacesWithoutLocation() {
-        let url = URL(string: serverUrlPrefix + "location")
+        let url = URL(string: Constants.serverUrlPrefix + "location")
         let parameters: Parameters = ["location": fromTextField.text!]
         
         Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
@@ -95,7 +94,7 @@ class ViewController: UIViewController {
     
     private func requetPlaces(lat: Double, lng:Double) {
         SwiftSpinner.show("Searching...")
-        let url = URL(string: serverUrlPrefix + "place")
+        let url = URL(string: Constants.serverUrlPrefix + "place")
         let category = categoryTextField.text?.lowercased().replacingOccurrences(of: " ", with: "_")
         let distance = distanceTextField.text != "" ? Int(distanceTextField.text!)! : 10
         let parameters: Parameters = ["keyword": keywordTextField.text!,

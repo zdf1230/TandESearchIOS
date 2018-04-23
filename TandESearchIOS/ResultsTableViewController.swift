@@ -17,7 +17,6 @@ class ResultsTableViewController: UITableViewController {
     @IBOutlet weak var previousButton: UIBarButtonItem!
     @IBOutlet weak var nextButton: UIBarButtonItem!
     @IBOutlet var resultsTableView: UITableView!
-    let serverUrlPrefix = "http://localhost:3000/"
     var placeResults = [[JSON]]()
     var placeResultDisplay = [JSON]()
     var page = 0
@@ -58,7 +57,6 @@ class ResultsTableViewController: UITableViewController {
     }
     
     func checkNextButtonStatus() {
-        print(nextPageToken)
         if nextPageToken.isEmpty {
             nextButton.isEnabled = false
         }
@@ -115,8 +113,7 @@ class ResultsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         SwiftSpinner.show("Fetching place details...")
         let placeid = placeResultDisplay[indexPath.row]["place_id"].stringValue
-        print(placeid)
-        let url = URL(string: serverUrlPrefix + "placedetails")
+        let url = URL(string: Constants.serverUrlPrefix + "placedetails")
         let parameters: Parameters = ["placeid": placeid]
         
         Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
@@ -148,7 +145,7 @@ class ResultsTableViewController: UITableViewController {
         }
         else {
             SwiftSpinner.show("Loading next page...")
-            let url = URL(string: serverUrlPrefix + "moreplaces")
+            let url = URL(string: Constants.serverUrlPrefix + "moreplaces")
             let parameters: Parameters = ["next_page_token": nextPageToken]
             
             Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in

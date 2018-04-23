@@ -45,12 +45,6 @@ class PhotosCollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photo", for: indexPath) as! PhotosCollectionViewCell
     
         loadImageForMetadata(photoMetadata: photosMetaData[indexPath.item], imageView: cell.photosImageView)
-        if (photosMetaData.isEmpty) {
-            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: PhotosCollectionView.bounds.size.width, height: PhotosCollectionView.bounds.size.height))
-            noDataLabel.text          = "No Photos"
-            noDataLabel.textAlignment = .center
-            PhotosCollectionView.backgroundView  = noDataLabel
-        }
         
         return cell
     }
@@ -61,8 +55,15 @@ class PhotosCollectionViewController: UICollectionViewController {
                 // TODO: handle the error.
                 print("Error: \(error.localizedDescription)")
             } else {
-                self.photosMetaData = (photos?.results)!
-                print(self.photosMetaData.count)
+                if let metadata = photos?.results {
+                    self.photosMetaData = metadata
+                }
+                if (self.photosMetaData.isEmpty) {
+                    let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.self.PhotosCollectionView.bounds.size.width, height: self.PhotosCollectionView.bounds.size.height))
+                    noDataLabel.text          = "No Photos"
+                    noDataLabel.textAlignment = .center
+                    self.PhotosCollectionView.backgroundView  = noDataLabel
+                }
                 self.PhotosCollectionView.reloadData()
             }
         }

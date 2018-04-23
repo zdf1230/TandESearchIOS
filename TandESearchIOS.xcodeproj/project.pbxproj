@@ -11,6 +11,10 @@
 		28333A32208BE0E800A56E51 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A31208BE0E800A56E51 /* InfoViewController.swift */; };
 		28333A34208C55F700A56E51 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A33208C55F600A56E51 /* PhotosCollectionViewController.swift */; };
 		28333A36208C61DF00A56E51 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A35208C61DF00A56E51 /* PhotosCollectionViewCell.swift */; };
+		28333A38208DAC2700A56E51 /* ReviewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A37208DAC2700A56E51 /* ReviewsViewController.swift */; };
+		28333A3A208DAC5200A56E51 /* ReviewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A39208DAC5200A56E51 /* ReviewsTableViewCell.swift */; };
+		28333A3E208DC37300A56E51 /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A3D208DC37300A56E51 /* ReviewModel.swift */; };
+		28333A40208DE8ED00A56E51 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A3F208DE8ED00A56E51 /* Constants.swift */; };
 		28AFB8942089AA85006E3A98 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28AFB8932089AA85006E3A98 /* CoreLocation.framework */; };
 		28AFB8982089BADA006E3A98 /* ResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28AFB8972089BADA006E3A98 /* ResultsTableViewController.swift */; };
 		28BC188020870997007CB946 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28BC187F20870997007CB946 /* AppDelegate.swift */; };
@@ -26,6 +30,10 @@
 		28333A31208BE0E800A56E51 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		28333A33208C55F600A56E51 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		28333A35208C61DF00A56E51 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
+		28333A37208DAC2700A56E51 /* ReviewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewController.swift; sourceTree = "<group>"; };
+		28333A39208DAC5200A56E51 /* ReviewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsTableViewCell.swift; sourceTree = "<group>"; };
+		28333A3D208DC37300A56E51 /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
+		28333A3F208DE8ED00A56E51 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		28AFB8932089AA85006E3A98 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		28AFB8972089BADA006E3A98 /* ResultsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTableViewController.swift; sourceTree = "<group>"; };
 		28BC187C20870997007CB946 /* TandESearchIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TandESearchIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,7 +95,11 @@
 				28BC188120870997007CB946 /* ViewController.swift */,
 				28AFB8972089BADA006E3A98 /* ResultsTableViewController.swift */,
 				28333A20208BC61D00A56E51 /* DetailsViewController.swift */,
+				28333A3D208DC37300A56E51 /* ReviewModel.swift */,
 				28BC188320870997007CB946 /* Main.storyboard */,
+				28333A37208DAC2700A56E51 /* ReviewsViewController.swift */,
+				28333A3F208DE8ED00A56E51 /* Constants.swift */,
+				28333A39208DAC5200A56E51 /* ReviewsTableViewCell.swift */,
 				28333A33208C55F600A56E51 /* PhotosCollectionViewController.swift */,
 				28333A35208C61DF00A56E51 /* PhotosCollectionViewCell.swift */,
 				28333A31208BE0E800A56E51 /* InfoViewController.swift */,
@@ -255,8 +267,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AFB8982089BADA006E3A98 /* ResultsTableViewController.swift in Sources */,
+				28333A40208DE8ED00A56E51 /* Constants.swift in Sources */,
 				28333A36208C61DF00A56E51 /* PhotosCollectionViewCell.swift in Sources */,
+				28333A3A208DAC5200A56E51 /* ReviewsTableViewCell.swift in Sources */,
+				28333A38208DAC2700A56E51 /* ReviewsViewController.swift in Sources */,
 				28BC188220870997007CB946 /* ViewController.swift in Sources */,
+				28333A3E208DC37300A56E51 /* ReviewModel.swift in Sources */,
 				28BC188020870997007CB946 /* AppDelegate.swift in Sources */,
 				28333A34208C55F700A56E51 /* PhotosCollectionViewController.swift in Sources */,
 				28333A21208BC61E00A56E51 /* DetailsViewController.swift in Sources */,
