@@ -26,7 +26,7 @@ class ReviewModel {
             self.name = review["user"]["name"].stringValue
             self.url = review["url"].stringValue
             self.photoUrl = review["user"]["image_url"].stringValue
-            if (self.photoUrl == "") {
+            if self.photoUrl == "" {
                 self.photoUrl = Constants.yelpDefaultAvatarUrl
             }
             self.text = review["text"].stringValue
@@ -37,7 +37,13 @@ class ReviewModel {
             self.num = index
             self.name = review["author_name"].stringValue
             self.url = review["author_url"].stringValue
+            if self.url == "" {
+                self.url =  Constants.googleDefaultUrl
+            }
             self.photoUrl = review["profile_photo_url"].stringValue
+            if self.photoUrl == "" {
+                self.photoUrl = Constants.googleDefaultAvatarUrl
+            }
             self.text = review["text"].stringValue
             self.rating = review["rating"].doubleValue
             
