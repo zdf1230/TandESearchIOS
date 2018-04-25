@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SwiftJSON
+import SwiftyJSON
 import Alamofire
 import AlamofireSwiftyJSON
 import SwiftSpinner
@@ -184,26 +184,41 @@ class ResultsTableViewController: UITableViewController {
         
     }
     
-    @objc func touchFavoriteFilledButton() {
-//        navigationItem.setRightBarButtonItems([favoriteEmptyButton, twitterButton], animated: true)
-//        if let placeId = placeDetails["place_id"]?.stringValue {
-//            UserDefaults.standard.removeObject(forKey: placeId)
-//            var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
-//            if let index = favoriteList.index(of: placeId) {
-//                favoriteList.remove(at: index)
-//            }
-//            UserDefaults.standard.set(favoriteList, forKey: "favorite")
-//        }
+    @IBAction func touchFavoriteFilledButton(sender: UIButton) {
+        let placeId = placeResultDisplay[sender.tag]["place_id"].stringValue
+        let cell = resultsTableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! ResultTableViewCell
+        cell.favoriteEmptyButton.isHidden = false
+        cell.favoriteFilledButton.isHidden = true
+        UserDefaults.standard.removeObject(forKey: placeId)
+        var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+        if let index = favoriteList.index(of: placeId) {
+            favoriteList.remove(at: index)
+        }
+        UserDefaults.standard.set(favoriteList, forKey: "favorite")
+        
+        let name = placeResultDisplay[sender.tag]["name"].stringValue
+        self.view.showToast("\(name) was removed to favorites", position: .bottom, popTime: 2, dismissOnTap: true)
     }
     
-    @objc func touchFavoriteEmptyButton() {
-//        navigationItem.setRightBarButtonItems([favoriteFilledButton, twitterButton], animated: true)
-//        if let placeId = placeDetails["place_id"]?.stringValue {
-//            UserDefaults.standard.set(createFavoriteItem(placeDetails: placeDetails), forKey: placeId)
-//            var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
-//            favoriteList.append(placeId)
-//            UserDefaults.standard.set(favoriteList, forKey: "favorite")
-//        }
+    @IBAction func touchFavoriteEmptyButton(sender: UIButton) {
+        let placeId = placeResultDisplay[sender.tag]["place_id"].stringValue
+        let cell = resultsTableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! ResultTableViewCell
+        cell.favoriteEmptyButton.isHidden = true
+        cell.favoriteFilledButton.isHidden = false
+        UserDefaults.standard.set(createFavoriteItem(placeResults: placeResultDisplay[sender.tag]), forKey: placeId)
+        var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+        favoriteList.append(placeId)
+        UserDefaults.standard.set(favoriteList, forKey: "favorite")
+        
+        let name = placeResultDisplay[sender.tag]["name"].stringValue
+        self.view.showToast("\(name) was added from favorites", position: .bottom, popTime: 2, dismissOnTap: true)
+    }
+    
+    func createFavoriteItem(placeResults: JSON) -> [String: String] {
+        return ["name": placeResults["name"].stringValue,
+                "icon": placeResults["icon"].stringValue,
+                "vicinity": placeResults["vicinity"].stringValue,
+                "place_id": placeResults["place_id"].stringValue]
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

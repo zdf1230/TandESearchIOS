@@ -73,10 +73,12 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 reviews.append(ReviewModel(index: num, review: r, isYelp: false))
                 num += 1
             }
+            reviewTableView.backgroundView  = nil
+            reviewTableView.separatorStyle  = .singleLine
         }
         else {
             let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: reviewTableView.bounds.size.width, height: reviewTableView.bounds.size.height))
-            noDataLabel.text          = "No Reivews"
+            noDataLabel.text          = "No Reviews"
             noDataLabel.textAlignment = .center
             reviewTableView.backgroundView  = noDataLabel
             reviewTableView.separatorStyle  = .none
@@ -96,10 +98,12 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 reviews.append(ReviewModel(index: num, review: r, isYelp: true))
                 num += 1
             }
+            reviewTableView.backgroundView  = nil
+            reviewTableView.separatorStyle  = .singleLine
         }
         else {
             let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: reviewTableView.bounds.size.width, height: reviewTableView.bounds.size.height))
-            noDataLabel.text          = "No Reivews"
+            noDataLabel.text          = "No Reviews"
             noDataLabel.textAlignment = .center
             reviewTableView.backgroundView  = noDataLabel
             reviewTableView.separatorStyle  = .none

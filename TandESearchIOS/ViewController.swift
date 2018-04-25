@@ -105,6 +105,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func touchSearch(_ sender: Any) {
         if formValidation() {
+            keywordTextField.resignFirstResponder()
+            distanceTextField.resignFirstResponder()
             if fromTextField.text != "Your Location" {
                 requestPlacesWithoutLocation()
             }
@@ -119,6 +121,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         categoryTextField.text = "Default"
         distanceTextField.text = ""
         fromTextField.text = "Your Location"
+        keywordTextField.resignFirstResponder()
+        distanceTextField.resignFirstResponder()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -133,6 +137,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             noDataLabel.textAlignment = .center
             tableView.backgroundView  = noDataLabel
             tableView.separatorStyle  = .none
+        }
+        else {
+            tableView.separatorStyle = .singleLine
+            tableView.backgroundView = nil
         }
         return favoriteList.count
     }
