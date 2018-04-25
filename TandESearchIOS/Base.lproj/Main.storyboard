@@ -248,12 +248,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="center" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KR1-24-BZv">
-                                            <rect key="frame" x="337" y="10" width="22" height="22"/>
+                                            <rect key="frame" x="337" y="31" width="22" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="favorite-empty"/>
                                         </button>
                                         <button opaque="NO" contentMode="center" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2o6-VK-nee">
-                                            <rect key="frame" x="337" y="10" width="22" height="22"/>
+                                            <rect key="frame" x="337" y="31" width="22" height="22"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="favorite-filled"/>
                                         </button>
@@ -295,7 +295,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aUF-DP-XuW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1705" y="30"/>
+            <point key="canvasLocation" x="1704.8" y="29.55665024630542"/>
         </scene>
         <!--Photos-->
         <scene sceneID="SLI-h3-Sep">
