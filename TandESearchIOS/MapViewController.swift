@@ -85,16 +85,13 @@ class MapViewController: UIViewController {
         
         Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
             if let directions = response.result.value {
-                let steps = directions["routes"][0]["legs"][0]["steps"].arrayValue
-                let path = GMSMutablePath()
-                for step in steps {
-                    path.addLatitude(step["start_location"]["lat"].doubleValue, longitude: step["start_location"]["lng"].doubleValue)
-                    path.addLatitude(step["end_location"]["lat"].doubleValue, longitude: step["end_location"]["lng"].doubleValue)
-                }
+                let overviewPolyline = directions["routes"][0]["overview_polyline"]["points"].stringValue
+                let path = GMSPath(fromEncodedPath: overviewPolyline)
                 
                 let polyline = GMSPolyline(path: path)
                 polyline.strokeColor = .blue
                 polyline.strokeWidth = 3.0
+                polyline.geodesic = true
                 polyline.map = self.googleMapView
                 
                 var cood = directions["routes"][0]["bounds"]["southwest"]
