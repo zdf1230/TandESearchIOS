@@ -148,7 +148,8 @@ class ResultsTableViewController: UITableViewController {
         if page == 0 {
             previousButton.isEnabled = false
         }
-        self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .right)
+        self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .none)
+        self.resultsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     
     @IBAction func touchNext(_ sender: Any) {
@@ -159,7 +160,8 @@ class ResultsTableViewController: UITableViewController {
             if page == placeResults.count - 1 {
                 checkNextButtonStatus()
             }
-            self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .left)
+            self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .none)
+            self.resultsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
         else {
             SwiftSpinner.show("Loading next page...")
@@ -178,7 +180,8 @@ class ResultsTableViewController: UITableViewController {
                 }
                 self.checkNextButtonStatus()
                 SwiftSpinner.hide()
-                self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .left)
+                self.resultsTableView.reloadSections(IndexSet(arrayLiteral: 0), with: .none)
+                self.resultsTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             }
         }
         
