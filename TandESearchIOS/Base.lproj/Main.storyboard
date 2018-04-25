@@ -271,16 +271,19 @@
                         </connections>
                     </tableView>
                     <toolbarItems>
-                        <barButtonItem title="Prev" width="192" id="sSw-Sl-fbl">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="RcC-jj-dmC"/>
+                        <barButtonItem title="Prev" width="150" id="sSw-Sl-fbl">
                             <connections>
                                 <action selector="touchPrevious:" destination="o7H-h0-r3C" id="UMf-r9-8pM"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem title="Next" width="185" id="PgF-RZ-BLL">
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="P2f-JQ-hMG"/>
+                        <barButtonItem title="Next" width="150" id="PgF-RZ-BLL">
                             <connections>
                                 <action selector="touchNext:" destination="o7H-h0-r3C" id="jC0-7S-jYI"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="eLX-P5-BoB"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Search Results" id="1zW-L8-Bpp">
                         <barButtonItem key="backBarButtonItem" title=" " id="Xbu-a1-jia"/>
@@ -422,7 +425,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O1M-fM-YaK" customClass="CosmosView" customModule="Cosmos">
-                                                    <rect key="frame" x="84" y="32" width="175" height="24"/>
+                                                    <rect key="frame" x="84" y="32" width="120" height="24"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
@@ -540,14 +543,65 @@
                     <view key="view" contentMode="scaleToFill" id="ijT-BN-fIu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rk3-bn-SXb">
+                                <rect key="frame" x="16" y="107" width="40" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Travel Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1F-xa-LWY">
+                                <rect key="frame" x="16" y="174" width="94" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eSQ-0S-a9S">
+                                <rect key="frame" x="16" y="136" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dXr-KX-j5k">
+                                <rect key="frame" x="16" y="203" width="343" height="29"/>
+                                <segments>
+                                    <segment title="Driving"/>
+                                    <segment title="Bicycling"/>
+                                    <segment title="Transit"/>
+                                    <segment title="Walking"/>
+                                </segments>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XdG-oE-0Bz">
+                                <rect key="frame" x="16" y="239" width="343" height="490"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XdG-oE-0Bz" firstAttribute="bottom" secondItem="92S-FO-5Cm" secondAttribute="bottom" id="5gl-a4-NGJ"/>
+                            <constraint firstItem="dXr-KX-j5k" firstAttribute="leading" secondItem="XdG-oE-0Bz" secondAttribute="leading" id="A48-hF-ioG"/>
+                            <constraint firstItem="XdG-oE-0Bz" firstAttribute="top" secondItem="dXr-KX-j5k" secondAttribute="bottom" constant="8" symbolic="YES" id="H0i-XR-wzJ"/>
+                            <constraint firstItem="eSQ-0S-a9S" firstAttribute="top" secondItem="Rk3-bn-SXb" secondAttribute="bottom" constant="8" symbolic="YES" id="Irz-E0-DH1"/>
+                            <constraint firstItem="b1F-xa-LWY" firstAttribute="leading" secondItem="dXr-KX-j5k" secondAttribute="leading" id="JOF-9f-OyB"/>
+                            <constraint firstItem="b1F-xa-LWY" firstAttribute="top" secondItem="eSQ-0S-a9S" secondAttribute="bottom" constant="8" symbolic="YES" id="Mc5-jP-l2a"/>
+                            <constraint firstItem="eSQ-0S-a9S" firstAttribute="trailing" secondItem="dXr-KX-j5k" secondAttribute="trailing" id="N2d-fw-Bcf"/>
+                            <constraint firstItem="eSQ-0S-a9S" firstAttribute="trailing" secondItem="ijT-BN-fIu" secondAttribute="trailingMargin" id="Ov3-yw-2Zi"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b1F-xa-LWY" secondAttribute="trailing" constant="20" symbolic="YES" id="Ptr-Bf-RF9"/>
+                            <constraint firstItem="dXr-KX-j5k" firstAttribute="top" secondItem="b1F-xa-LWY" secondAttribute="bottom" constant="8" symbolic="YES" id="Upg-Qw-sha"/>
+                            <constraint firstItem="Rk3-bn-SXb" firstAttribute="leading" secondItem="eSQ-0S-a9S" secondAttribute="leading" id="b1s-aO-zhl"/>
+                            <constraint firstItem="Rk3-bn-SXb" firstAttribute="top" secondItem="92S-FO-5Cm" secondAttribute="top" constant="19" id="dXL-6p-TOf"/>
+                            <constraint firstItem="eSQ-0S-a9S" firstAttribute="leading" secondItem="b1F-xa-LWY" secondAttribute="leading" id="fcL-oO-zJE"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Rk3-bn-SXb" secondAttribute="trailingMargin" id="gbr-GZ-coQ"/>
+                            <constraint firstItem="Rk3-bn-SXb" firstAttribute="leading" secondItem="ijT-BN-fIu" secondAttribute="leadingMargin" id="phS-e5-FZO"/>
+                            <constraint firstItem="dXr-KX-j5k" firstAttribute="trailing" secondItem="XdG-oE-0Bz" secondAttribute="trailing" id="zre-6T-C8R"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="92S-FO-5Cm"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="google-maps" id="TDW-O2-sil"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkE-n2-MKc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3382" y="807"/>
+            <point key="canvasLocation" x="3381.5999999999999" y="806.89655172413802"/>
         </scene>
         <!--Info-->
         <scene sceneID="DJs-kj-gBW">
@@ -763,6 +817,6 @@
         <image name="review" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0IC-mW-28s"/>
+        <segue reference="yOB-hI-lE7"/>
     </inferredMetricsTieBreakers>
 </document>
