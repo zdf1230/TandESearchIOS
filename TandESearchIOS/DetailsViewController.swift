@@ -100,6 +100,9 @@ class DetailsViewController: UITabBarController {
                 favoriteList.remove(at: index)
             }
             UserDefaults.standard.set(favoriteList, forKey: "favorite")
+            
+            let name = (placeDetails["name"]?.stringValue)!
+            self.view.showToast("\(name) was removed from favorites", position: .bottom, popTime: 2, dismissOnTap: true)
         }
     }
     
@@ -110,6 +113,9 @@ class DetailsViewController: UITabBarController {
             var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
             favoriteList.append(placeId)
             UserDefaults.standard.set(favoriteList, forKey: "favorite")
+            
+            let name = (placeDetails["name"]?.stringValue)!
+            self.view.showToast("\(name) was added to favorites", position: .bottom, popTime: 2, dismissOnTap: true)
         }
     }
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28018D9B209052760007BB30 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28018D9A209052760007BB30 /* MapViewController.swift */; };
 		28333A21208BC61E00A56E51 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A20208BC61D00A56E51 /* DetailsViewController.swift */; };
 		28333A32208BE0E800A56E51 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A31208BE0E800A56E51 /* InfoViewController.swift */; };
 		28333A34208C55F700A56E51 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28333A33208C55F600A56E51 /* PhotosCollectionViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28018D9A209052760007BB30 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		28333A20208BC61D00A56E51 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		28333A31208BE0E800A56E51 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		28333A33208C55F600A56E51 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 				28333A20208BC61D00A56E51 /* DetailsViewController.swift */,
 				28333A3D208DC37300A56E51 /* ReviewModel.swift */,
 				28BC188320870997007CB946 /* Main.storyboard */,
+				28018D9A209052760007BB30 /* MapViewController.swift */,
 				28333A37208DAC2700A56E51 /* ReviewsViewController.swift */,
 				28333A3F208DE8ED00A56E51 /* Constants.swift */,
 				28333A39208DAC5200A56E51 /* ReviewsTableViewCell.swift */,
@@ -275,6 +278,7 @@
 				28333A3A208DAC5200A56E51 /* ReviewsTableViewCell.swift in Sources */,
 				28333A38208DAC2700A56E51 /* ReviewsViewController.swift in Sources */,
 				28BC188220870997007CB946 /* ViewController.swift in Sources */,
+				28018D9B209052760007BB30 /* MapViewController.swift in Sources */,
 				28333A3E208DC37300A56E51 /* ReviewModel.swift in Sources */,
 				28BC188020870997007CB946 /* AppDelegate.swift in Sources */,
 				28333A34208C55F700A56E51 /* PhotosCollectionViewController.swift in Sources */,

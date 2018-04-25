@@ -197,7 +197,7 @@ class ResultsTableViewController: UITableViewController {
         UserDefaults.standard.set(favoriteList, forKey: "favorite")
         
         let name = placeResultDisplay[sender.tag]["name"].stringValue
-        self.view.showToast("\(name) was removed to favorites", position: .bottom, popTime: 2, dismissOnTap: true)
+        self.view.showToast("\(name) was removed from favorites", position: .bottom, popTime: 2, dismissOnTap: true)
     }
     
     @IBAction func touchFavoriteEmptyButton(sender: UIButton) {
@@ -211,7 +211,7 @@ class ResultsTableViewController: UITableViewController {
         UserDefaults.standard.set(favoriteList, forKey: "favorite")
         
         let name = placeResultDisplay[sender.tag]["name"].stringValue
-        self.view.showToast("\(name) was added from favorites", position: .bottom, popTime: 2, dismissOnTap: true)
+        self.view.showToast("\(name) was added to favorites", position: .bottom, popTime: 2, dismissOnTap: true)
     }
     
     func createFavoriteItem(placeResults: JSON) -> [String: String] {

@@ -83,6 +83,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         case 1:
             favoriteTableView.isHidden = false
             searchView.isHidden = true
+            keywordTextField.resignFirstResponder()
+            distanceTextField.resignFirstResponder()
         default:
             break
         }
@@ -172,6 +174,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         if editingStyle == .delete {
             favoriteTableView.beginUpdates()
             let placeId = favoriteList[indexPath.row]
+            let place = UserDefaults.standard.dictionary(forKey: placeId) as! [String: String]
+            let name = place["name"]!
             UserDefaults.standard.removeObject(forKey: placeId)
             if let index = favoriteList.index(of: placeId) {
                 favoriteList.remove(at: index)
@@ -179,6 +183,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             UserDefaults.standard.set(favoriteList, forKey: "favorite")
             favoriteTableView.deleteRows(at: [indexPath], with: .fade)
             favoriteTableView.endUpdates()
+            
+            self.view.showToast("\(name) was removed from favorites", position: .bottom, popTime: 2, dismissOnTap: true)
         }
     }
     
