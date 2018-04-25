@@ -13,6 +13,9 @@ import SwiftyJSON
 
 class DetailsViewController: UITabBarController {
 
+    var twitterButton: UIBarButtonItem!
+    var favoriteFilledButton: UIBarButtonItem!
+    var favoriteEmptyButton: UIBarButtonItem!
     var placeDetails = [String: JSON]()
     var yelpReviews = [JSON]()
     
@@ -21,6 +24,19 @@ class DetailsViewController: UITabBarController {
         
         self.title = placeDetails["name"]?.stringValue
         loadYelpReviews()
+        
+        twitterButton = UIBarButtonItem(image: UIImage(named: "forward-arrow"), style: .plain, target: self, action: #selector(touchTwitterButton))
+        favoriteFilledButton = UIBarButtonItem(image: UIImage(named: "favorite-filled"), style: .plain, target: self, action: #selector(touchFavoriteFilledButton))
+        favoriteEmptyButton = UIBarButtonItem(image: UIImage(named: "favorite-empty"), style: .plain, target: self, action: #selector(touchFavoriteEmptyButton))
+        
+        if UserDefaults.standard.value(forKey: (placeDetails["place_id"]?.stringValue)!) != nil {
+            navigationItem.setRightBarButtonItems([favoriteFilledButton, twitterButton], animated: true)
+        }
+        else {
+            navigationItem.setRightBarButtonItems([favoriteEmptyButton, twitterButton], animated: true)
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,6 +84,40 @@ class DetailsViewController: UITabBarController {
             }
             
         }
+    }
+    
+    @objc func touchTwitterButton() {
+        let twitterUrl: String = "https://twitter.com/intent/tweet?text=Check out \((placeDetails["name"]?.stringValue)!) located at \((placeDetails["formatted_address"]?.stringValue)!). Website:&url=\((placeDetails["website"]?.stringValue)!)&hashtags=TravelAndEntertainmentSearch".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        UIApplication.shared.open(URL(string: twitterUrl)!)
+    }
+    
+    @objc func touchFavoriteFilledButton() {
+        navigationItem.setRightBarButtonItems([favoriteEmptyButton, twitterButton], animated: true)
+        if let placeId = placeDetails["place_id"]?.stringValue {
+            UserDefaults.standard.removeObject(forKey: placeId)
+            var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+            if let index = favoriteList.index(of: placeId) {
+                favoriteList.remove(at: index)
+            }
+            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+        }
+    }
+    
+    @objc func touchFavoriteEmptyButton() {
+        navigationItem.setRightBarButtonItems([favoriteFilledButton, twitterButton], animated: true)
+        if let placeId = placeDetails["place_id"]?.stringValue {
+            UserDefaults.standard.set(createFavoriteItem(placeDetails: placeDetails), forKey: placeId)
+            var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+            favoriteList.append(placeId)
+            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+        }
+    }
+    
+    func createFavoriteItem(placeDetails: [String: JSON]) -> [String: String] {
+        return ["name": (placeDetails["name"]?.stringValue)!,
+                "icon": (placeDetails["icon"]?.stringValue)!,
+                "vicinity": (placeDetails["vicinity"]?.stringValue)!,
+                "place_id": (placeDetails["place_id"]?.stringValue)!]
     }
 
     /*

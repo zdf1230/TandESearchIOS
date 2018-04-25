@@ -16,8 +16,11 @@ import GooglePlaces
 import CoreLocation
 import SwiftSpinner
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var mainSelectedSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var favoriteTableView: UITableView!
     @IBOutlet weak var keywordTextField: UITextField!
     @IBOutlet weak var categoryTextField: UITextField!
     @IBOutlet weak var distanceTextField: UITextField!
@@ -28,10 +31,15 @@ class ViewController: UIViewController {
     ]
     var currentLocation: CLLocation!
     var resultsObject: JSON!
+    var detailsObject: JSON!
+    var favoriteList = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isToolbarHidden = true
+        
+        favoriteTableView.delegate = self
+        favoriteTableView.dataSource = self
         
         keywordTextField.delegate = self
         
@@ -39,6 +47,23 @@ class ViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
+        
+        if UserDefaults.standard.array(forKey: "favorite") == nil {
+            UserDefaults.standard.set([String](), forKey: "favorite")
+        }
+        else {
+            favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if UserDefaults.standard.array(forKey: "favorite") == nil {
+            UserDefaults.standard.set([String](), forKey: "favorite")
+        }
+        else {
+            favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+        }
+        favoriteTableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,6 +75,19 @@ class ViewController: UIViewController {
         view.endEditing(true);
     }
 
+    @IBAction func mainSelectedChanged(_ sender: Any) {
+        switch mainSelectedSegmentedControl.selectedSegmentIndex {
+        case 0:
+            favoriteTableView.isHidden = true
+            searchView.isHidden = false
+        case 1:
+            favoriteTableView.isHidden = false
+            searchView.isHidden = true
+        default:
+            break
+        }
+    }
+    
     @IBAction func touchCategory(_ sender: Any) {
         categoryTextField.inputView = UIView()
         McPicker.show(data: categoryData) { [weak self] (selections:[Int: String]) in
@@ -83,6 +121,72 @@ class ViewController: UIViewController {
         fromTextField.text = "Your Location"
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (favoriteList.isEmpty) {
+            let noDataLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "No Favorites"
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView  = noDataLabel
+            tableView.separatorStyle  = .none
+        }
+        return favoriteList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteItem", for: indexPath)
+        
+        let placeId = favoriteList[indexPath.row]
+        let place = UserDefaults.standard.dictionary(forKey: placeId) as! [String: String]
+        cell.textLabel?.text = place["name"]
+        cell.textLabel?.numberOfLines = 0
+        cell.detailTextLabel?.text = place["vicinity"]
+        cell.detailTextLabel?.numberOfLines = 0
+        let icon = try! Data(contentsOf: URL(string: place["icon"]!)!)
+        cell.imageView?.image = UIImage(data: icon, scale: CGFloat(1.5))
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80.0
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            favoriteTableView.beginUpdates()
+            let placeId = favoriteList[indexPath.row]
+            UserDefaults.standard.removeObject(forKey: placeId)
+            if let index = favoriteList.index(of: placeId) {
+                favoriteList.remove(at: index)
+            }
+            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+            favoriteTableView.deleteRows(at: [indexPath], with: .fade)
+            favoriteTableView.endUpdates()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        SwiftSpinner.show("Fetching place details...")
+        let placeId = favoriteList[indexPath.row]
+        let url = URL(string: Constants.serverUrlPrefix + "placedetails")
+        let parameters: Parameters = ["placeid": placeId]
+        
+        Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
+            self.detailsObject = response.result.value
+            SwiftSpinner.hide()
+            self.performSegue(withIdentifier: "favoriteDetails", sender: nil)
+        }
+    }
+    
     private func requestPlacesWithoutLocation() {
         let url = URL(string: Constants.serverUrlPrefix + "location")
         let parameters: Parameters = ["location": fromTextField.text!]
@@ -111,10 +215,19 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let resultsTableView: ResultsTableViewController = segue.destination as! ResultsTableViewController
-        if resultsObject != nil {
-            resultsTableView.setTable(resultsObject: resultsObject)
+        if segue.identifier == "results" {
+            let resultsTableView: ResultsTableViewController = segue.destination as! ResultsTableViewController
+            if resultsObject != nil {
+                resultsTableView.setTable(resultsObject: resultsObject)
+            }
         }
+        if segue.identifier == "favoriteDetails" {
+            let detailsView: DetailsViewController = segue.destination as! DetailsViewController
+            if detailsObject != nil {
+                detailsView.setDetails(detailsObject: detailsObject)
+            }
+        }
+        
     }
     
     private func formValidation() -> Bool {

@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var reviresSelectedSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var reviewsSelectedSegmentedControl: UISegmentedControl!
     @IBOutlet weak var sortBySegmentedControl: UISegmentedControl!
     @IBOutlet weak var orderSegmentedControl: UISegmentedControl!
     @IBOutlet weak var reviewTableView: UITableView!
@@ -54,7 +54,7 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @IBAction func reviewsSelectedChanged(_ sender: Any) {
-        switch reviresSelectedSegmentedControl.selectedSegmentIndex {
+        switch reviewsSelectedSegmentedControl.selectedSegmentIndex {
         case 0:
             loadGoogleReviews()
         case 1:

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import SwiftyJSON
+import SwiftJSON
 import Alamofire
 import AlamofireSwiftyJSON
 import SwiftSpinner
@@ -37,6 +37,8 @@ class ResultsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isToolbarHidden = false
+        
+        resultsTableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,13 +97,29 @@ class ResultsTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "place", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "place", for: indexPath) as! ResultTableViewCell
+        
         cell.textLabel?.text = placeResultDisplay[indexPath.row]["name"].string
         cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.text = placeResultDisplay[indexPath.row]["vicinity"].string
         cell.detailTextLabel?.numberOfLines = 0
         let icon = try! Data(contentsOf: URL(string: placeResultDisplay[indexPath.row]["icon"].string!)!)
         cell.imageView?.image = UIImage(data: icon, scale: CGFloat(1.5))
+        
+        if UserDefaults.standard.value(forKey: placeResultDisplay[indexPath.row]["place_id"].stringValue) != nil {
+            cell.favoriteEmptyButton.isHidden = true
+            cell.favoriteFilledButton.isHidden = false
+        }
+        else {
+            cell.favoriteEmptyButton.isHidden = false
+            cell.favoriteFilledButton.isHidden = true
+        }
+        
+        cell.favoriteFilledButton.tag = indexPath.row
+        cell.favoriteEmptyButton.tag = indexPath.row
+        
+        cell.favoriteFilledButton.addTarget(self, action: #selector(touchFavoriteFilledButton), for: .touchUpInside)
+        cell.favoriteEmptyButton.addTarget(self, action: #selector(touchFavoriteEmptyButton), for: .touchUpInside)
 
         return cell
     }
@@ -164,6 +182,28 @@ class ResultsTableViewController: UITableViewController {
             }
         }
         
+    }
+    
+    @objc func touchFavoriteFilledButton() {
+//        navigationItem.setRightBarButtonItems([favoriteEmptyButton, twitterButton], animated: true)
+//        if let placeId = placeDetails["place_id"]?.stringValue {
+//            UserDefaults.standard.removeObject(forKey: placeId)
+//            var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+//            if let index = favoriteList.index(of: placeId) {
+//                favoriteList.remove(at: index)
+//            }
+//            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+//        }
+    }
+    
+    @objc func touchFavoriteEmptyButton() {
+//        navigationItem.setRightBarButtonItems([favoriteFilledButton, twitterButton], animated: true)
+//        if let placeId = placeDetails["place_id"]?.stringValue {
+//            UserDefaults.standard.set(createFavoriteItem(placeDetails: placeDetails), forKey: placeId)
+//            var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+//            favoriteList.append(placeId)
+//            UserDefaults.standard.set(favoriteList, forKey: "favorite")
+//        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
