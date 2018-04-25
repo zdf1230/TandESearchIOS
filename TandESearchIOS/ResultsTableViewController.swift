@@ -37,6 +37,8 @@ class ResultsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isToolbarHidden = false
+        
+        resultsTableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,13 +97,29 @@ class ResultsTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "place", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "place", for: indexPath) as! ResultTableViewCell
+        
         cell.textLabel?.text = placeResultDisplay[indexPath.row]["name"].string
         cell.textLabel?.numberOfLines = 0
         cell.detailTextLabel?.text = placeResultDisplay[indexPath.row]["vicinity"].string
         cell.detailTextLabel?.numberOfLines = 0
         let icon = try! Data(contentsOf: URL(string: placeResultDisplay[indexPath.row]["icon"].string!)!)
         cell.imageView?.image = UIImage(data: icon, scale: CGFloat(1.5))
+        
+        if UserDefaults.standard.value(forKey: placeResultDisplay[indexPath.row]["place_id"].stringValue) != nil {
+            cell.favoriteEmptyButton.isHidden = true
+            cell.favoriteFilledButton.isHidden = false
+        }
+        else {
+            cell.favoriteEmptyButton.isHidden = false
+            cell.favoriteFilledButton.isHidden = true
+        }
+        
+        cell.favoriteFilledButton.tag = indexPath.row
+        cell.favoriteEmptyButton.tag = indexPath.row
+        
+        cell.favoriteFilledButton.addTarget(self, action: #selector(touchFavoriteFilledButton), for: .touchUpInside)
+        cell.favoriteEmptyButton.addTarget(self, action: #selector(touchFavoriteEmptyButton), for: .touchUpInside)
 
         return cell
     }
@@ -164,6 +182,43 @@ class ResultsTableViewController: UITableViewController {
             }
         }
         
+    }
+    
+    @IBAction func touchFavoriteFilledButton(sender: UIButton) {
+        let placeId = placeResultDisplay[sender.tag]["place_id"].stringValue
+        let cell = resultsTableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! ResultTableViewCell
+        cell.favoriteEmptyButton.isHidden = false
+        cell.favoriteFilledButton.isHidden = true
+        UserDefaults.standard.removeObject(forKey: placeId)
+        var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+        if let index = favoriteList.index(of: placeId) {
+            favoriteList.remove(at: index)
+        }
+        UserDefaults.standard.set(favoriteList, forKey: "favorite")
+        
+        let name = placeResultDisplay[sender.tag]["name"].stringValue
+        self.view.showToast("\(name) was removed to favorites", position: .bottom, popTime: 2, dismissOnTap: true)
+    }
+    
+    @IBAction func touchFavoriteEmptyButton(sender: UIButton) {
+        let placeId = placeResultDisplay[sender.tag]["place_id"].stringValue
+        let cell = resultsTableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! ResultTableViewCell
+        cell.favoriteEmptyButton.isHidden = true
+        cell.favoriteFilledButton.isHidden = false
+        UserDefaults.standard.set(createFavoriteItem(placeResults: placeResultDisplay[sender.tag]), forKey: placeId)
+        var favoriteList = UserDefaults.standard.array(forKey: "favorite") as! [String]
+        favoriteList.append(placeId)
+        UserDefaults.standard.set(favoriteList, forKey: "favorite")
+        
+        let name = placeResultDisplay[sender.tag]["name"].stringValue
+        self.view.showToast("\(name) was added from favorites", position: .bottom, popTime: 2, dismissOnTap: true)
+    }
+    
+    func createFavoriteItem(placeResults: JSON) -> [String: String] {
+        return ["name": placeResults["name"].stringValue,
+                "icon": placeResults["icon"].stringValue,
+                "vicinity": placeResults["vicinity"].stringValue,
+                "place_id": placeResults["place_id"].stringValue]
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

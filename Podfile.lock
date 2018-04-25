@@ -5,19 +5,19 @@ PODS:
     - SwiftyJSON (~> 4.0)
   - Cosmos (15.0.0)
   - EasyToast (2.0.2)
-  - GoogleMaps (2.6.0):
-    - GoogleMaps/Maps (= 2.6.0)
-  - GoogleMaps/Base (2.6.0)
-  - GoogleMaps/Maps (2.6.0):
+  - GoogleMaps (2.7.0):
+    - GoogleMaps/Maps (= 2.7.0)
+  - GoogleMaps/Base (2.7.0)
+  - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
-  - GooglePlacePicker (2.6.0):
-    - GoogleMaps (= 2.6.0)
-    - GooglePlaces (= 2.6.0)
-  - GooglePlaces (2.6.0):
-    - GoogleMaps/Base (= 2.6.0)
+  - GooglePlacePicker (2.7.0):
+    - GoogleMaps (= 2.7.0)
+    - GooglePlaces (= 2.7.0)
+  - GooglePlaces (2.7.0):
+    - GoogleMaps/Base (= 2.7.0)
   - McPicker (1.0.0)
   - SwiftSpinner (1.5.0)
-  - SwiftyJSON (4.0.0)
+  - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -48,13 +48,13 @@ SPEC CHECKSUMS:
   AlamofireSwiftyJSON: ad896b68b586aea5de8ddba641ad3b402b8d5511
   Cosmos: a6dbd3d0baa0cc8f51f8598f7508d5a09d0a9ade
   EasyToast: 2844de2158fe8d2313c6de81b5a858a909d82532
-  GoogleMaps: 42f91c68b7fa2f84d5c86597b18ceb99f5414c7f
-  GooglePlacePicker: e4488625effb006f59de49e14b7a603e463e4261
-  GooglePlaces: f6ddf33b75cef69e888907d9947c57198ed845f3
+  GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
+  GooglePlacePicker: 59ea44db173c58486ad6123993e81feefcbce9c3
+  GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
   McPicker: 130183cd3d22fc6933ea9e63c5a0d0d1becc0122
   SwiftSpinner: 4c058c7a1d6b444dd2e1d70988ead40783097133
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 19dc7ff85958e5ecb5e7cf283f9ecf7a1b857d26
+PODFILE CHECKSUM: 86f12866a51d9c754ae827fed6a00ab20d0a6704
 
 COCOAPODS: 1.5.0
