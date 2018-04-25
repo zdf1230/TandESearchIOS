@@ -53,6 +53,7 @@ class PhotosCollectionViewController: UICollectionViewController {
         GMSPlacesClient.shared().lookUpPhotos(forPlaceID: placeID) { (photos, error) -> Void in
             if let error = error {
                 // TODO: handle the error.
+                self.view.showToast("Bad Internet Connection", position: .bottom, popTime: 2, dismissOnTap: true)
                 print("Error: \(error.localizedDescription)")
             } else {
                 if let metadata = photos?.results {
@@ -74,6 +75,7 @@ class PhotosCollectionViewController: UICollectionViewController {
             (photo, error) -> Void in
             if let error = error {
                 // TODO: handle the error.
+                self.view.showToast("Bad Internet Connection", position: .bottom, popTime: 2, dismissOnTap: true)
                 print("Error: \(error.localizedDescription)")
             } else {
                 imageView.image = photo;

@@ -206,7 +206,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let parameters: Parameters = ["location": fromTextField.text!]
         
         Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
-            self.requetPlaces(lat: response.result.value!["lat"].double!, lng: response.result.value!["lng"].double!)
+            if let res = response.result.value {
+                self.requetPlaces(lat: res["lat"].double!, lng: res["lng"].double!)
+            }
+            else {
+                self.view.showToast("API Failure", position: .bottom, popTime: 2, dismissOnTap: true)
+            }
+            
         }
     }
     
@@ -251,6 +257,32 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         if !CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: distanceTextField.text!)) {
             self.view.showToast("Distance must be numbers", position: .bottom, popTime: 2, dismissOnTap: true)
+            return false
+        }
+        if NetworkReachabilityManager()!.isReachable {
+            print("Connected")
+        } else {
+            print("No Internet")
+            self.view.showToast("No Network", position: .bottom, popTime: 2, dismissOnTap: true)
+            return false
+        }
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined:
+                self.view.showToast("Cannot get location", position: .bottom, popTime: 2, dismissOnTap: true)
+                return false
+            case .restricted:
+                self.view.showToast("Cannot get location", position: .bottom, popTime: 2, dismissOnTap: true)
+                return false
+            case .denied:
+                self.view.showToast("Cannot get location", position: .bottom, popTime: 2, dismissOnTap: true)
+                return false
+            default:
+                break
+            }
+        }
+        else {
+            self.view.showToast("Cannot get location", position: .bottom, popTime: 2, dismissOnTap: true)
             return false
         }
         return true
