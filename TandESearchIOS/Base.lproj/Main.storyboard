@@ -565,7 +565,7 @@
                                     <action selector="autocompleteClicked:" destination="XB8-1F-8pm" eventType="touchDown" id="sZQ-WU-1qf"/>
                                 </connections>
                             </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dXr-KX-j5k">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dXr-KX-j5k">
                                 <rect key="frame" x="16" y="203" width="343" height="29"/>
                                 <segments>
                                     <segment title="Driving"/>

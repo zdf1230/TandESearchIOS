@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireSwiftyJSON
 import GoogleMaps
 import GooglePlaces
 
@@ -15,6 +17,8 @@ class MapViewController: UIViewController {
     @IBOutlet weak var fromTextField: UITextField!
     @IBOutlet weak var travelModeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var MapView: UIView!
+    var googleMapView: GMSMapView!
+    var originLocation: CLLocationCoordinate2D!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +28,7 @@ class MapViewController: UIViewController {
         let lng = placeDetails["geometry"]!["location"]["lng"].doubleValue
         
         let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: 15.0)
-        let googleMapView = GMSMapView.map(withFrame: MapView.bounds, camera: camera)
+        googleMapView = GMSMapView.map(withFrame: MapView.bounds, camera: camera)
         googleMapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         let marker = GMSMarker()
@@ -48,10 +52,61 @@ class MapViewController: UIViewController {
     @IBAction func travelModeChanged(_ sender: Any) {
         switch travelModeSegmentedControl.selectedSegmentIndex {
         case 0:
-            break
+            getDirections(mode: "driving")
+        case 1:
+            getDirections(mode: "bicycling")
+        case 2:
+            getDirections(mode: "transit")
+        case 3:
+            getDirections(mode: "walking")
         default:
             break
         }
+    }
+    
+    func getDirections(mode: String) {
+        googleMapView.clear()
+        var marker = GMSMarker(position: originLocation)
+        marker.map = googleMapView
+        
+        let placeDetails = (tabBarController as! DetailsViewController).placeDetails
+        let lat = placeDetails["geometry"]!["location"]["lat"].doubleValue
+        let lng = placeDetails["geometry"]!["location"]["lng"].doubleValue
+        let destinationLocationString = String(lat) + "," + String(lng)
+        let originLocationString = String(originLocation.latitude) + "," + String(originLocation.longitude)
+        
+        marker = GMSMarker(position: CLLocationCoordinate2D(latitude: lat, longitude: lng))
+        marker.map = googleMapView
+        
+        let url = URL(string: Constants.serverUrlPrefix + "getdirections")
+        let parameters: Parameters = ["originlocation": originLocationString,
+                                      "destinationlocation": destinationLocationString,
+                                      "mode": mode]
+        
+        Alamofire.request(url!, parameters: parameters).responseSwiftyJSON { (response) in
+            if let directions = response.result.value {
+                let steps = directions["routes"][0]["legs"][0]["steps"].arrayValue
+                let path = GMSMutablePath()
+                for step in steps {
+                    path.addLatitude(step["start_location"]["lat"].doubleValue, longitude: step["start_location"]["lng"].doubleValue)
+                    path.addLatitude(step["end_location"]["lat"].doubleValue, longitude: step["end_location"]["lng"].doubleValue)
+                }
+                
+                let polyline = GMSPolyline(path: path)
+                polyline.strokeColor = .blue
+                polyline.strokeWidth = 3.0
+                polyline.map = self.googleMapView
+                
+                var cood = directions["routes"][0]["bounds"]["southwest"]
+                let left = CLLocationCoordinate2D(latitude: cood["lat"].doubleValue, longitude: cood["lng"].doubleValue)
+                cood = directions["routes"][0]["bounds"]["northeast"]
+                let right = CLLocationCoordinate2D(latitude: cood["lat"].doubleValue, longitude: cood["lng"].doubleValue)
+                let bounds = GMSCoordinateBounds(coordinate: left, coordinate: right)
+                let update = GMSCameraUpdate.fit(bounds)
+                self.googleMapView.animate(with: update)
+            }
+        }
+        
     }
 
 }
@@ -69,7 +124,10 @@ extension MapViewController: GMSAutocompleteViewControllerDelegate {
         else {
             fromTextField.text = place.name
         }
+        travelModeSegmentedControl.isEnabled = true
         travelModeSegmentedControl.selectedSegmentIndex = 0
+        originLocation = place.coordinate
+        getDirections(mode: "driving")
         dismiss(animated: true, completion: nil)
     }
     
